@@ -78,14 +78,17 @@ public class KotlinPlugin {
                     LOGGER.debug("Class {} will reinitialized cause it is Kotlin object with redefined class", className);
                     PluginManager.getInstance().getScheduler().scheduleCommand(() -> {
                         try {
-                            LOGGER.error("Reinitializing Kotlin object {}", className);
+                            LOGGER.debug("Reinitializing Kotlin object {}", className);
                             Class<?> clazz = classLoader.loadClass(className);
                             Method m = clazz.getDeclaredMethod(HOTSWAP_AGENT_CLINIT_METHOD);
                             if (m != null) {
-                                LOGGER.error("Executing method {} of Kotlin object {}", m.getName(), className);
+                                LOGGER.debug("Executing method {} of Kotlin object {}", m.getName(), className);
                                 m.setAccessible(true);
                                 m.invoke(null);
                             }
+                        } catch (NoSuchMethodException ex) {
+                            LOGGER.debug("Class {} does not contain method {}", ex, ctClass.getName(), HOTSWAP_AGENT_CLINIT_METHOD);
+                            // swallow
                         } catch (Exception e) {
                             LOGGER.error("Error reinitializing Kotlin object {}", e, className);
                         }
@@ -99,7 +102,6 @@ public class KotlinPlugin {
         } catch (Exception e) {
             LOGGER.error("Exception occurred in Kotlin plugin", e);
         }
-
     }
 
 

@@ -1,5 +1,4 @@
 import groovy.lang.GroovyObject
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 
 group = "org.hotswapagent"
 version = "1.3.0-SNAPSHOT"
