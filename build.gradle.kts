@@ -1,7 +1,7 @@
 import groovy.lang.GroovyObject
 
 group = "org.hotswapagent"
-version = "1.3.0-SNAPSHOT"
+version = "1.3.0"
 
 plugins {
     java apply true
